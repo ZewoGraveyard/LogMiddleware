@@ -28,45 +28,22 @@
 public struct LogMiddleware: MiddlewareType {
     private let log: Log
     private let level: Log.Level
-    private let debugModeEnabled: Bool
+    private let debugMode: Bool
 
-    public init(log: Log, level: Log.Level = .Info, debugModeEnabled: Bool = false) {
+    public init(log: Log, level: Log.Level = .Info, debugMode: Bool = true) {
         self.log = log
         self.level = level
-        self.debugModeEnabled = debugModeEnabled
+        self.debugMode = debugMode
     }
     
     public func respond(request: Request, chain: ChainType) throws -> Response {
         let response = try chain.proceed(request)
         var message = "================================================================================\n"
         message += "Request:\n"
-        message += debugModeEnabled ? "\(request.debugDescription)\n" : "\(request)\n"
+        message += debugMode ? "\(request.debugDescription)\n" : "\(request)\n"
         message += "--------------------------------------------------------------------------------\n"
         message += "Response:\n"
-        message += debugModeEnabled ? "\(response.debugDescription)\n" : "\(response)\n"
-        message += "================================================================================\n\n"
-        log.log(level, item: message)
-        return response
-    }
-}
-
-public struct DebugLogMiddleware: MiddlewareType {
-    private let log: Log
-    private let level: Log.Level
-
-    public init(log: Log, level: Log.Level = .Info) {
-        self.log = log
-        self.level = level
-    }
-
-    public func respond(request: Request, chain: ChainType) throws -> Response {
-        let response = try chain.proceed(request)
-        var message = "================================================================================\n"
-        message += "Request:\n"
-        message += "\(request.debugDescription)\n"
-        message += "--------------------------------------------------------------------------------\n"
-        message += "Response:\n"
-        message += "\(response.debugDescription)\n"
+        message += debugMode ? "\(response.debugDescription)\n" : "\(response)\n"
         message += "================================================================================\n\n"
         log.log(level, item: message)
         return response
