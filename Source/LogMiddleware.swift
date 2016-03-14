@@ -28,22 +28,22 @@
 public struct LogMiddleware: MiddlewareType {
     private let log: Log
     private let level: Log.Level
-    private let debugMode: Bool
+    private let debug: Bool
 
-    public init(log: Log, level: Log.Level = .Info, debugMode: Bool = true) {
+    public init(log: Log, level: Log.Level = .Info, debug: Bool = true) {
         self.log = log
         self.level = level
-        self.debugMode = debugMode
+        self.debug = debug
     }
     
     public func respond(request: Request, chain: ChainType) throws -> Response {
         let response = try chain.proceed(request)
         var message = "================================================================================\n"
         message += "Request:\n"
-        message += debugMode ? "\(request.debugDescription)\n" : "\(request)\n"
+        message += debug ? "\(request.debugDescription)\n" : "\(request)\n"
         message += "--------------------------------------------------------------------------------\n"
         message += "Response:\n"
-        message += debugMode ? "\(response.debugDescription)\n" : "\(response)\n"
+        message += debug ? "\(response.debugDescription)\n" : "\(response)\n"
         message += "================================================================================\n\n"
         log.log(level, item: message)
         return response
