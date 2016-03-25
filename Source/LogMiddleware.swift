@@ -25,7 +25,7 @@
 @_exported import Log
 @_exported import HTTP
 
-public struct LogMiddleware: MiddlewareType {
+public struct LogMiddleware: Middleware {
     private let log: Log
     private let level: Log.Level
     private let debug: Bool
@@ -35,9 +35,9 @@ public struct LogMiddleware: MiddlewareType {
         self.level = level
         self.debug = debug
     }
-    
-    public func respond(request: Request, chain: ChainType) throws -> Response {
-        let response = try chain.proceed(request)
+
+    public func respond(request: Request, chain: Responder) throws -> Response {
+        let response = try chain.respond(request)
         var message = "================================================================================\n"
         message += "Request:\n"
         message += debug ? "\(request.debugDescription)\n" : "\(request)\n"
