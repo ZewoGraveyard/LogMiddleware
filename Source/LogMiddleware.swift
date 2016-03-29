@@ -30,7 +30,7 @@ public struct LogMiddleware: Middleware {
     private let level: Log.Level
     private let debug: Bool
 
-    public init(log: Log, level: Log.Level = .Info, debug: Bool = true) {
+    public init(log: Log, level: Log.Level = .info, debug: Bool = true) {
         self.log = log
         self.level = level
         self.debug = debug
