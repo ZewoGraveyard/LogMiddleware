@@ -26,12 +26,12 @@
 @_exported import HTTP
 
 public struct LogMiddleware: Middleware {
-    private let log: Log
+    private let logger: Logger
     private let level: Log.Level
     private let debug: Bool
 
-    public init(log: Log, level: Log.Level = .info, debug: Bool = true) {
-        self.log = log
+    public init(logger: Logger, level: Log.Level = .info, debug: Bool = true) {
+        self.logger = logger
         self.level = level
         self.debug = debug
     }
@@ -45,7 +45,7 @@ public struct LogMiddleware: Middleware {
         message += "Response:\n"
         message += debug ? "\(response.debugDescription)\n" : "\(response)\n"
         message += "================================================================================\n\n"
-        log.log(level, item: message)
+        logger.log(message)
         return response
     }
 }
