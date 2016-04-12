@@ -36,8 +36,8 @@ public struct LogMiddleware: Middleware {
         self.debug = debug
     }
 
-    public func respond(request: Request, chain: Responder) throws -> Response {
-        let response = try chain.respond(request)
+    public func respond(to request: Request, chainingTo next: Responder) throws -> Response {
+        let response = try next.respond(to: request)
         var message = "================================================================================\n"
         message += "Request:\n"
         message += debug ? "\(request.debugDescription)\n" : "\(request)\n"
