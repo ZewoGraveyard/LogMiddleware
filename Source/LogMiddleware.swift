@@ -45,7 +45,7 @@ public struct LogMiddleware: Middleware {
         message += "Response:\n"
         message += debug ? "\(response.debugDescription)\n" : "\(response)\n"
         message += "================================================================================\n\n"
-        logger.log(message)
+        logger.log(item: message)
         return response
     }
 }
