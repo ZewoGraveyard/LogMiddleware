@@ -8,7 +8,7 @@ class LogMiddlewareTests: XCTestCase {
 }
 
 extension LogMiddlewareTests {
-    static var allTests : [(String, LogMiddlewareTests -> () throws -> Void)] {
+: [(String, LogMiddlewareTests -> () throws -> Void)] {
         return [
            ("testReality", testReality),
         ]
